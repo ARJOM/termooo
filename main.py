@@ -55,14 +55,16 @@ def get_word_by_info(palavra):
 
         #verificar letras que estão
         if value['esta']:
-            # se a posição da letra atual é conhecida e difere da palavra, então não pode ser
-            if 'posicao' in chaves and letra != palavra[value['posicao']]:
+            # se a letra deve estar na palavra, mas não está, então não pode ser
+            if letra not in palavra:
+                result = False
+            # se a posição da letra atual é conhecida e a letra na mesma posição na palavra é diferente, então não pode ser
+            elif 'posicao' in chaves and letra != palavra[value['posicao']]:
                 result = False
             # se a posição da letra atual coincide com algum indice da lista posicao não, então não pode ser
             elif 'posicao_nao' in chaves:
                 for indice in value['posicao_nao']:
-                    # se a letra no indice em questão for igual, ou a letra não existir na palavra, então não pode ser um palpite
-                    if letra == palavra[indice] or letra not in palavra:
+                    if letra == palavra[indice]:
                         result = False
         #verifica letras que não estão
         elif letra in palavra:
